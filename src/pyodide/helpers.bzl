@@ -272,12 +272,17 @@ _REPLACEMENTS_COMMON_0_26_0_28 = [
 _REPLACEMENTS = {
     "0.26.0a2": _REPLACEMENTS_COMMON + _REPLACEMENTS_COMMON_0_26_0_28,
     "0.28.2": _REPLACEMENTS_COMMON + _REPLACEMENTS_COMMON_0_26_0_28,
-    "314.0.0": _REPLACEMENTS_COMMON + [
+    "314.0.1": _REPLACEMENTS_COMMON + [
         # for 314 or later, pyodide.asm.mjs is es6 module
         [
             "export default _createPyodideModule;",
             # still expose _createPyodideModule for compatibility (import { _createPyodideModule })
             _PRELUDE + "export default _createPyodideModule; export { _createPyodideModule };",
+        ],
+        # TODO(immediately): Remove this and update Pyodide version
+        [
+            "c.reader.releaseLock(),",
+            "reader = c.reader,reader.cancel().then(() => { reader.releaseLock(); }),",
         ],
     ],
 }
